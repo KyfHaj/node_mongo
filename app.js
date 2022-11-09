@@ -3,7 +3,7 @@ const express = require('express')
 const bodyparser = require('body-parser')
 const ejs = require('ejs')
 const mongoose = require('mongoose');
-const encrypt = require('mongoose-encryption')
+const md5 = require("md5");
 
 const app = express()
 
@@ -36,11 +36,6 @@ const userSchema = new mongoose.Schema({
   email: String,
   password: String
 })
-// Tạo encryption
-// const secret = "Thisisencrypt"
-// Mã hóa khóa trên chỉ với "password" còn "email" thì không
-// Mã hóa ở đây là mã hóa password đã đăng ký, bước dưới truyền đến database
-userSchema.plugin(encrypt, { secret: process.env.SECRET, encryptedFields: ["password"]})
 
 // Tạo mẫu document (2)
 const User = new mongoose.model("User", userSchema)
@@ -79,7 +74,7 @@ app.get("/register", function(req,res){
 app.post("/register", function(req,res){
   const newUser = new User({
     email: req.body.username,
-    password: req.body.password,
+    password: md5(req.body.password)
   })
 
   newUser.save(function(err){
