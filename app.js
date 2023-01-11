@@ -15,7 +15,7 @@ app.use(bodyparser.urlencoded({
 // Kết nối mongodb
 
 mongoose.connect(
-  `mongodb://52.68.180.49:27017/userDB`,
+  `mongodb+srv://kyf-cluster2611:troiday26@cluster0.tlxzxcb.mongodb.net/user?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -100,6 +100,6 @@ app.get("/submit", function(req,res){
   res.render("submit.ejs")
 })
 
-app.listen(3000, () => {
-  console.log(`Server start on port ${3000}`)
+app.listen(8080, () => {
+  console.log(`Server start on port: 8080`)
 })
